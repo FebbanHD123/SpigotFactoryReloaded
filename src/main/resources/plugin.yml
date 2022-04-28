@@ -1,0 +1,5 @@
+name: SpigotFactoryReloade
+version: 1.0-Beta
+api-version: 1.18
+author: FebanHD
+main: de.febanhd.spigotfactoryreloaded.SpigotFactoryReloadedPlugin
