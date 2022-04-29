@@ -5,8 +5,6 @@ import de.febanhd.spigotfactoryreloaded.model.TickAble;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.blocks.PipelineBlockHopper;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.blocks.PipelineBlockPipe;
 import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.Collections;

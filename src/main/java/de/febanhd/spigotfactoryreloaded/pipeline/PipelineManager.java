@@ -6,7 +6,6 @@ import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineBlock;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineItem;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.blocks.PipelineBlockHopper;
 import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;

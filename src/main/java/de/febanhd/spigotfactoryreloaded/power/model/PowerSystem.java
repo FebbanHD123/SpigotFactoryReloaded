@@ -1,16 +1,13 @@
 package de.febanhd.spigotfactoryreloaded.power.model;
 
-import com.google.common.collect.Lists;
 import de.febanhd.spigotfactoryreloaded.model.TickAble;
 import de.febanhd.spigotfactoryreloaded.power.PowerManager;
 import de.febanhd.spigotfactoryreloaded.power.model.components.PowerConsumer;
 import de.febanhd.spigotfactoryreloaded.power.model.components.PowerSource;
 import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;

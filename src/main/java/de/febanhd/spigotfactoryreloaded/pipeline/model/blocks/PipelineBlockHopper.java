@@ -2,15 +2,12 @@ package de.febanhd.spigotfactoryreloaded.pipeline.model.blocks;
 
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineBlock;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineItem;
-import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.Hopper;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.Vector;
 
 import java.util.Map;
 

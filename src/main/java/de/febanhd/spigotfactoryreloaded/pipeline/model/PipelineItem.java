@@ -1,13 +1,9 @@
 package de.febanhd.spigotfactoryreloaded.pipeline.model;
 
 import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.EulerAngle;
-import org.bukkit.util.Vector;
 
 public class PipelineItem {
 

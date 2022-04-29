@@ -1,6 +1,5 @@
 package de.febanhd.spigotfactoryreloaded.power.model;
 
-import de.febanhd.spigotfactoryreloaded.model.TickAble;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
