@@ -11,7 +11,7 @@ import org.bukkit.util.Vector;
 
 public class PipelineItem {
 
-    private static final double CUSTOM_NAME_Y_OFFSET = 0.15;
+    private static final double CUSTOM_NAME_Y_OFFSET = 0.1;
     private final ItemStack itemStack;
     private final ArmorStand armorStand;
 
