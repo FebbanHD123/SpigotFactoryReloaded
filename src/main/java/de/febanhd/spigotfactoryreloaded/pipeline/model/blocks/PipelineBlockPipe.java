@@ -1,5 +1,6 @@
 package de.febanhd.spigotfactoryreloaded.pipeline.model.blocks;
 
+import de.febanhd.spigotfactoryreloaded.data.impl.PipelineFilterBlockData;
 import de.febanhd.spigotfactoryreloaded.pipeline.PipelineManager;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineBlock;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineItem;
@@ -8,6 +9,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.util.Vector;
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class PipelineBlockPipe extends PipelineBlock {
 
@@ -66,6 +71,10 @@ public class PipelineBlockPipe extends PipelineBlock {
 
     @Override
     public boolean canCollectItem(PipelineItem item) {
-        return true;
+        AtomicBoolean canCollect = new AtomicBoolean(true);
+        this.pipelineManager.getPlugin().getBlockDataManager().getBlockData(this.block, PipelineFilterBlockData.class).ifPresent(filterBlockData -> {
+            canCollect.set(filterBlockData.isItemAllowed(item.getItemStack()));
+        });
+        return canCollect.get();
     }
 }

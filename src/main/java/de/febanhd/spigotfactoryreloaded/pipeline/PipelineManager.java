@@ -17,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PipelineManager implements TickAble {
 
@@ -51,13 +52,21 @@ public class PipelineManager implements TickAble {
                         int inventoryIndex = inventoryContents.indexOf(stack);
                         if (stack == null)
                             continue;
-                        hopper.getInventory().setItem(inventoryIndex, null);
+
+                        AtomicBoolean created = new AtomicBoolean();
                         Block hopperDestinationBlock = hopper.getBlock().getRelative(BlockFace.DOWN);
                         PipelineBlock.getBlockIfValid(hopperDestinationBlock, new PipelineBlockHopper(this, block, null)).ifPresent(pipelineBlock -> {
                             Location spawnLocation = BlockUtil.getCenterLocation(hopperDestinationBlock).add(0, 0.5, 0);
-                            pipelineBlock.setItem(new PipelineItem(spawnLocation, stack));
+                            PipelineItem pipelineItem = new PipelineItem(stack);
+                            if(pipelineBlock.canCollectItem(pipelineItem)) {
+                                pipelineItem.spawnArmorStand(spawnLocation);
+                                pipelineBlock.setItem(pipelineItem);
+                                hopper.getInventory().setItem(inventoryIndex, null);
+                                created.set(true);
+                            }
                         });
-                        break;
+                        if(created.get())
+                            break;
                     }
                 }
             });

@@ -9,14 +9,15 @@ public class PipelineItem {
 
     private static final double CUSTOM_NAME_Y_OFFSET = 0.1;
     private final ItemStack itemStack;
-    private final ArmorStand armorStand;
+    private ArmorStand armorStand;
 
-    public PipelineItem(Location spawnLocation, ItemStack itemStack) {
+    public PipelineItem(ItemStack itemStack) {
         this.itemStack = itemStack;
-        this.armorStand = spawnArmorStand(spawnLocation);
     }
 
-    private ArmorStand spawnArmorStand(Location spawnLocation) {
+    public void spawnArmorStand(Location spawnLocation) {
+        if(this.armorStand != null && !this.armorStand.isDead())
+            throw new IllegalStateException("Armorstand is already spawned");
         ArmorStand armorStand = (ArmorStand) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.ARMOR_STAND);
         armorStand.setSmall(true);
         armorStand.setVisible(false);
@@ -26,7 +27,7 @@ public class PipelineItem {
             armorStand.setCustomName(this.itemStack.getAmount() + "x");
             armorStand.setCustomNameVisible(true);
         }
-        return armorStand;
+        this.armorStand = armorStand;
     }
 
     public void removeFromWorld() {
