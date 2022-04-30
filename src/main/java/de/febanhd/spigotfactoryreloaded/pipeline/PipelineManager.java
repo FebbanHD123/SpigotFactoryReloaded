@@ -1,6 +1,7 @@
 package de.febanhd.spigotfactoryreloaded.pipeline;
 
 import com.google.common.collect.Lists;
+import de.febanhd.spigotfactoryreloaded.SpigotFactoryReloadedPlugin;
 import de.febanhd.spigotfactoryreloaded.model.TickAble;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineBlock;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineItem;
@@ -22,7 +23,13 @@ public class PipelineManager implements TickAble {
     private final List<Block> hopperBlocks = Lists.newCopyOnWriteArrayList();
     private final long HOPPER_DELAY = 1500;
     private long lastHopperTick;
+    private final SpigotFactoryReloadedPlugin plugin;
     //TODO: make hopper above glass not interactable
+
+
+    public PipelineManager(SpigotFactoryReloadedPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     public void add(Hopper hopper) {
         if(!this.hopperBlocks.contains(hopper.getLocation().getBlock()))
@@ -46,7 +53,7 @@ public class PipelineManager implements TickAble {
                             continue;
                         hopper.getInventory().setItem(inventoryIndex, null);
                         Block hopperDestinationBlock = hopper.getBlock().getRelative(BlockFace.DOWN);
-                        PipelineBlock.getBlockIfValid(hopperDestinationBlock, new PipelineBlockHopper(block, null)).ifPresent(pipelineBlock -> {
+                        PipelineBlock.getBlockIfValid(hopperDestinationBlock, new PipelineBlockHopper(this, block, null)).ifPresent(pipelineBlock -> {
                             Location spawnLocation = BlockUtil.getCenterLocation(hopperDestinationBlock).add(0, 0.5, 0);
                             pipelineBlock.setItem(new PipelineItem(spawnLocation, stack));
                         });
@@ -60,5 +67,9 @@ public class PipelineManager implements TickAble {
 
     private boolean isValidHopper(Block block) {
         return block.getState() instanceof Hopper && block.getRelative(BlockFace.DOWN).getType() == Material.GLASS;
+    }
+
+    public SpigotFactoryReloadedPlugin getPlugin() {
+        return plugin;
     }
 }

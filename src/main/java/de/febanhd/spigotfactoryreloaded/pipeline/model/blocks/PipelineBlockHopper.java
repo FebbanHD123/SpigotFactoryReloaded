@@ -1,5 +1,6 @@
 package de.febanhd.spigotfactoryreloaded.pipeline.model.blocks;
 
+import de.febanhd.spigotfactoryreloaded.pipeline.PipelineManager;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineBlock;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineItem;
 import org.bukkit.Bukkit;
@@ -13,8 +14,8 @@ import java.util.Map;
 
 public class PipelineBlockHopper extends PipelineBlock {
 
-    public PipelineBlockHopper(Block block, PipelineBlock lastBlock) {
-        super(block, lastBlock);
+    public PipelineBlockHopper(PipelineManager pipelineManager, Block block, PipelineBlock lastBlock) {
+        super(pipelineManager, block, lastBlock);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package de.febanhd.spigotfactoryreloaded.pipeline.model.blocks;
 
+import de.febanhd.spigotfactoryreloaded.pipeline.PipelineManager;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineBlock;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.PipelineItem;
 import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
@@ -14,8 +15,8 @@ public class PipelineBlockPipe extends PipelineBlock {
     private final Location centerLocation;
     private int steps = -1;
 
-    public PipelineBlockPipe(Block block, PipelineBlock lastBlock) {
-        super(block, lastBlock);
+    public PipelineBlockPipe(PipelineManager pipelineManager, Block block, PipelineBlock lastBlock) {
+        super(pipelineManager, block, lastBlock);
         this.centerLocation = BlockUtil.getCenterLocation(block);
     }
 
@@ -60,7 +61,7 @@ public class PipelineBlockPipe extends PipelineBlock {
     public void setItem(PipelineItem item) {
         super.setItem(item);
         double distance = centerLocation.distance(item.getLocation());
-        this.steps = (int) Math.floor(distance / SPEED);
+        this.steps = (int) (distance / SPEED);
     }
 
     @Override

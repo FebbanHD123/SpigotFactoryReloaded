@@ -37,7 +37,7 @@ public class PipelineItem {
         Location location = this.armorStand.getLocation();
         if(armorStand.isCustomNameVisible())
             location.add(0, CUSTOM_NAME_Y_OFFSET, 0);
-        return location;
+        return location.add(0, 1, 0);
     }
 
     public void setLocation(Location location, PipelineBlock block) {
@@ -45,7 +45,7 @@ public class PipelineItem {
         if(this.armorStand.isCustomNameVisible()) {
             location.subtract(0, CUSTOM_NAME_Y_OFFSET, 0);
         }
-        armorStand.teleport(location);
+        armorStand.teleport(location.subtract(0, 1, 0));
     }
 
     public ItemStack getItemStack() {

@@ -1,15 +1,20 @@
 package de.febanhd.spigotfactoryreloaded.pipeline.model;
 
 import com.google.common.collect.Lists;
+import de.febanhd.spigotfactoryreloaded.data.impl.PipelineFilterBlockData;
 import de.febanhd.spigotfactoryreloaded.model.TickAble;
+import de.febanhd.spigotfactoryreloaded.pipeline.PipelineManager;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.blocks.PipelineBlockHopper;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.blocks.PipelineBlockPipe;
 import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
 import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class PipelineBlock implements TickAble {
 
@@ -20,11 +25,13 @@ public abstract class PipelineBlock implements TickAble {
         listCopy.forEach(PipelineBlock::tick);
     }
 
+    protected final PipelineManager pipelineManager;
     protected final Block block;
     protected PipelineBlock lastBlock;
     protected PipelineItem item;
 
-    public PipelineBlock(Block block, PipelineBlock lastBlock) {
+    public PipelineBlock(PipelineManager pipelineManager, Block block, PipelineBlock lastBlock) {
+        this.pipelineManager = pipelineManager;
         this.block = block;
         this.lastBlock = lastBlock;
         activate();
@@ -53,7 +60,12 @@ public abstract class PipelineBlock implements TickAble {
 
     protected Optional<PipelineBlock> getNextBlock(PipelineBlock currentBlock) {
         List<Block> neighborBlocks = BlockUtil.getNeighborBlocks(currentBlock.block);
+        //remove the block where the item come from
         neighborBlocks.removeIf(block -> this.lastBlock != null && this.lastBlock.block.getLocation().equals(block.getLocation()));
+        //check for filters
+        neighborBlocks = this.performFilters(neighborBlocks, this.item.getItemStack());
+
+        //randomize blocks
         Collections.shuffle(neighborBlocks);
         Optional<PipelineBlock> block;
         int i = 0;
@@ -67,8 +79,8 @@ public abstract class PipelineBlock implements TickAble {
     public static Optional<PipelineBlock> getBlockIfValid(Block block, PipelineBlock currentBlock) {
         Optional<PipelineBlock> blockOptional = switch (block.getType()) {
 
-            case GLASS ->  Optional.of(new PipelineBlockPipe(block, currentBlock));
-            case HOPPER -> Optional.of(new PipelineBlockHopper(block, currentBlock));
+            case GLASS ->  Optional.of(new PipelineBlockPipe(currentBlock.pipelineManager, block, currentBlock));
+            case HOPPER -> Optional.of(new PipelineBlockHopper(currentBlock.pipelineManager, block, currentBlock));
 
             default -> Optional.empty();
         };
@@ -83,6 +95,33 @@ public abstract class PipelineBlock implements TickAble {
         }
         return blockOptional;
 
+    }
+
+    /**
+     * Check if a neighbor block has a filter block data
+     * and
+     */
+
+    private List<Block> performFilters(List<Block> neighborBlocks, ItemStack item) {
+        List<Block> blocksWithValidFilters = Lists.newArrayList();
+        AtomicReference<Block> prioritizedBlock = new AtomicReference<>();
+        for (Block neighborBlock : neighborBlocks) {
+            this.pipelineManager.getPlugin().getBlockDataManager().getBlockData(neighborBlock, PipelineFilterBlockData.class).ifPresent(filterBlockData -> {
+                if(!filterBlockData.isItemAllowed(item))
+                    return;
+                blocksWithValidFilters.add(neighborBlock);
+                if(filterBlockData.isPrioritized()) {
+                    prioritizedBlock.set(neighborBlock);
+                }
+            });
+            if(prioritizedBlock.get() != null)
+                return Arrays.asList(prioritizedBlock.get());
+        }
+        if(blocksWithValidFilters.isEmpty())
+            return neighborBlocks;
+
+        neighborBlocks.removeIf(block1 -> !blocksWithValidFilters.contains(block1));
+        return neighborBlocks;
     }
 
     public abstract boolean canCollectItem(PipelineItem item);
