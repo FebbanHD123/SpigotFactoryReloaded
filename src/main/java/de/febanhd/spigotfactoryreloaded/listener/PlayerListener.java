@@ -1,7 +1,7 @@
 package de.febanhd.spigotfactoryreloaded.listener;
 
 import de.febanhd.spigotfactoryreloaded.SpigotFactoryReloadedPlugin;
-import de.febanhd.spigotfactoryreloaded.data.impl.PipelineFilterBlockData;
+import de.febanhd.spigotfactoryreloaded.pipeline.blockdata.PipelineFilterBlockData;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;

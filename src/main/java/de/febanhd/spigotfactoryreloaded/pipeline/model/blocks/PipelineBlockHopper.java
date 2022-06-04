@@ -37,4 +37,11 @@ public class PipelineBlockHopper extends PipelineBlock {
         }
         return false;
     }
+
+    @Override
+    public int getPriority() {
+        return 1;
+    }
+
+
 }

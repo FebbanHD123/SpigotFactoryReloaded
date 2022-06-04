@@ -1,7 +1,6 @@
-package de.febanhd.spigotfactoryreloaded.data.impl;
+package de.febanhd.spigotfactoryreloaded.pipeline.blockdata;
 
 import de.febanhd.spigotfactoryreloaded.data.AbstractBlockData;
-import de.febanhd.spigotfactoryreloaded.model.TickAble;
 import de.febanhd.spigotfactoryreloaded.utils.BlockUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;

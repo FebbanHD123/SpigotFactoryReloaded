@@ -1,10 +1,9 @@
 package de.febanhd.spigotfactoryreloaded.data;
 
 import com.google.common.collect.Maps;
-import de.febanhd.spigotfactoryreloaded.data.impl.PipelineFilterBlockData;
+import de.febanhd.spigotfactoryreloaded.pipeline.blockdata.PipelineFilterBlockData;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 public class BlockDataRegistry {

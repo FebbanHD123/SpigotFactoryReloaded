@@ -1,7 +1,7 @@
 package de.febanhd.spigotfactoryreloaded.pipeline.model;
 
 import com.google.common.collect.Lists;
-import de.febanhd.spigotfactoryreloaded.data.impl.PipelineFilterBlockData;
+import de.febanhd.spigotfactoryreloaded.pipeline.blockdata.PipelineFilterBlockData;
 import de.febanhd.spigotfactoryreloaded.model.TickAble;
 import de.febanhd.spigotfactoryreloaded.pipeline.PipelineManager;
 import de.febanhd.spigotfactoryreloaded.pipeline.model.blocks.PipelineBlockHopper;
@@ -133,4 +133,6 @@ public abstract class PipelineBlock implements TickAble {
     public PipelineBlock getLastBlock() {
         return lastBlock;
     }
+
+    public abstract int getPriority();
 }
